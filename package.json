@@ -17,5 +17,6 @@
   "bugs": {
     "url": "https://github.com/Phaisan1233/SEER/issues"
   },
-  "homepage": "https://github.com/Phaisan1233/SEER#readme"
+  "homepage": "https://github.com/Phaisan1233/SEER#readme",
+  "dependencies": {}
 }

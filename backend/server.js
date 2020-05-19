@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -32,8 +33,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join('../frontend/', 'build', 'index.html')); // relative path
     });
 }
-
-console.log(__dirname);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

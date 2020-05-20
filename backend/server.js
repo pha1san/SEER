@@ -23,9 +23,11 @@ connection.once('open', () => {
 
 const exercisesRouter = require('./routes/exercises');
 const usersRouter = require('./routes/users');
+const entriesRouter = require('./routes/entries')
 
 app.use('/exercises', exercisesRouter);
 app.use('/users', usersRouter);
+app.use('/entries', entriesRouter);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('../frontend/build'));

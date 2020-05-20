@@ -43,6 +43,7 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//test
 /* Content from exercises.js, we don't need it at the moment but if we do we can repurpose it for entries.js
 router.route('/:id').get((req, res) => {
   Exercise.findById(req.params.id)

@@ -6,7 +6,7 @@ const entrySchema = new Schema({
   type: { type: String, required: true },
   key: { type: String, required: true },
   title: { type: String, required: true },
-  author: { type: String, required: true },
+  author: { type: String, default: "Anonymous" },
   journal: { type: String },
   pages: { type: String },
   volume: { type: String },

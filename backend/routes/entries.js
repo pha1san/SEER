@@ -39,8 +39,8 @@ router.route('/add').post((req, res) => {
   });
 
   newEntry.save()
-  .then(() => res.json('Entry added!'))
-  .catch(err => res.status(400).json('Error: ' + err));
+    .then(() => res.json('Entry added!'))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 /* Content from exercises.js, we don't need it at the moment but if we do we can repurpose it for entries.js

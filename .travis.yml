@@ -16,3 +16,4 @@ deploy:
   skip-cleanup: true
   app:
     master: cise-seer
+    phaisanbranch: cise-seer-staging

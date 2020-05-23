@@ -106,3 +106,7 @@ dist
 .vscode
 
 .DS_Store
+
+request.http
+
+tdd_articles.bib

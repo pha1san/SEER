@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "12"
+install:
+  - cd backend
+  - npm install
 deploy:
   provider: heroku
   api_key:

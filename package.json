@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "start": "cd backend && npm install && npm start",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "frontend-install": "cd frontend && npm install"
   },
   "repository": {
     "type": "git",

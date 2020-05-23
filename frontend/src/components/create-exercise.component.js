@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import DatePicker from 'react-datepicker';
+import React, { Component } from "react";
+import axios from "axios";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class CreateExercise extends Component {
@@ -14,52 +14,52 @@ export default class CreateExercise extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
-      description: '',
+      username: "",
+      description: "",
       duration: 0,
       date: new Date(),
-      users: []
-    }
+      users: [],
+    };
   }
 
   componentDidMount() {
-    axios.get('users/')
-      .then(response => {
+    axios
+      .get("users/")
+      .then((response) => {
         if (response.data.length > 0) {
           this.setState({
-            users: response.data.map(user => user.username),
-            username: response.data[0].username
-          })
+            users: response.data.map((user) => user.username),
+            username: response.data[0].username,
+          });
         }
       })
       .catch((error) => {
         console.log(error);
-      })
-
+      });
   }
 
   onChangeUsername(e) {
     this.setState({
-      username: e.target.value
-    })
+      username: e.target.value,
+    });
   }
 
   onChangeDescription(e) {
     this.setState({
-      description: e.target.value
-    })
+      description: e.target.value,
+    });
   }
 
   onChangeDuration(e) {
     this.setState({
-      duration: e.target.value
-    })
+      duration: e.target.value,
+    });
   }
 
   onChangeDate(date) {
     this.setState({
-      date: date
-    })
+      date: date,
+    });
   }
 
   onSubmit(e) {
@@ -69,13 +69,12 @@ export default class CreateExercise extends Component {
       username: this.state.username,
       description: this.state.description,
       duration: this.state.duration,
-      date: this.state.date
-    }
+      date: this.state.date,
+    };
 
     console.log(exercise);
 
-    axios.post('/exercises/add', exercise)
-      .then(res => console.log(res.data));
+    axios.post("/exercises/add", exercise).then((res) => console.log(res.data));
 
     // window.location = '/';
   }
@@ -87,24 +86,25 @@ export default class CreateExercise extends Component {
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
             <label>Username: </label>
-            <select ref="userinput"
+            <select
+              ref="userinput"
               required
               className="form-control"
               value={this.state.username}
               onChange={this.onChangeUsername}>
-              {
-                this.state.users.map(function (user) {
-                  return <option
-                    key={user}
-                    value={user}>{user}
-                  </option>;
-                })
-              }
+              {this.state.users.map(function (user) {
+                return (
+                  <option key={user} value={user}>
+                    {user}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="form-group">
             <label>Description: </label>
-            <input type="text"
+            <input
+              type="text"
               required
               className="form-control"
               value={this.state.description}
@@ -131,10 +131,14 @@ export default class CreateExercise extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+            <input
+              type="submit"
+              value="Create Exercise Log"
+              className="btn btn-primary"
+            />
           </div>
         </form>
       </div>
-    )
+    );
   }
 }

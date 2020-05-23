@@ -1,3 +1,10 @@
 language: node_js
 node_js:
-- '12'
+  - "12"
+deploy:
+  provider: heroku
+  api_key:
+    secure: $HEROKU_KEY
+  skip-cleanup: true
+  on:
+    branch: master

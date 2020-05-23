@@ -5,6 +5,7 @@ install:
   - cd backend
   - npm install
   - cd ..
+  - npm install
 deploy:
   provider: heroku
   api_key:

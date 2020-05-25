@@ -1,17 +1,14 @@
-const router = require('express').Router();
-let Entry = require('../models/entry.model');
-const bibtexParse = require('bibtex-parse');
+const router = require("express").Router();
+let Entry = require("../models/entry.model");
+const bibtexParse = require("bibtex-parse");
 
-
-router.route('/').get((req, res) => {
+router.route("/").get((req, res) => {
   Entry.find()
-    .then(entries => res.json(entries))
-    .catch(err => res.status(400).json('Error: ' + err));
-
-
+    .then((entries) => res.json(entries))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route('/add').post((req, res) => {
+router.route("/add").post((req, res) => {
   const type = req.body.type;
   const key = req.body.key;
   const title = req.body.title;
@@ -27,35 +24,44 @@ router.route('/add').post((req, res) => {
   const month = req.body.month;
 
   const newEntry = new Entry({
-    type, key,
-    title, author, journal,
-    pages, volume,
-    annote, publisher,
-    method, participants,
-    year, month,
+    type,
+    key,
+    title,
+    author,
+    journal,
+    pages,
+    volume,
+    annote,
+    publisher,
+    method,
+    participants,
+    year,
+    month,
   });
 
-  newEntry.save()
-    .then(() => res.json('Entry added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+  newEntry
+    .save()
+    .then(() => res.json("Entry added!"))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route('/addall').post((req, res) => {
-  const fs = require('fs');
-  let tdd = bibtexParse.entries(fs.readFileSync('tdd_articles.bib', 'utf8'));
+router.route("/addall").post((req, res) => {
+  const fs = require("fs");
+  let tdd = bibtexParse.entries(fs.readFileSync("tdd_articles.bib", "utf8"));
 
   tdd.forEach((tdd) => {
     const newEntry = new Entry(tdd);
-    newEntry.save()
-      .then(() => res.json('Entry added!'))
-      .catch(err => res.status(400).json('Error: ' + err));
+    newEntry
+      .save()
+      .then(() => res.json("Entry added!"))
+      .catch((err) => res.status(400).json("Error: " + err));
   });
 });
 
-router.route('/:id').get((req, res) => {
+router.route("/:id").get((req, res) => {
   Entry.findById(req.params.id)
-    .then(entry => res.json(entry))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then((entry) => res.json(entry))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 /* Content from exercises.js, we don't need it at the moment but if we do we can repurpose it for entries.js

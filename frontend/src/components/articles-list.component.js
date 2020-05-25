@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-const Article = props => (
+const Article = (props) => (
   <tr>
     <td>{props.article.title}</td>
     <td>{props.article.author}</td>
@@ -10,30 +10,31 @@ const Article = props => (
       <Link to={"/edit/" + props.article._id}>link</Link>
     </td>
   </tr>
-)
+);
 
 export default class ArticleList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      articles: []
+      articles: [],
     };
   }
 
   componentDidMount() {
-    axios.get('/entries/')
-      .then(response => {
-        this.setState({ articles: response.data })
+    axios
+      .get("/entries/")
+      .then((response) => {
+        this.setState({ articles: response.data });
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   }
 
   articleList() {
-    return this.state.articles.map(currentArticle => {
+    return this.state.articles.map((currentArticle) => {
       return <Article article={currentArticle} key={currentArticle._id} />;
-    })
+    });
   }
 
   render() {
@@ -48,11 +49,9 @@ export default class ArticleList extends Component {
               <th>Link</th>
             </tr>
           </thead>
-          <tbody>
-            {this.articleList()}
-          </tbody>
+          <tbody>{this.articleList()}</tbody>
         </table>
       </div>
-    )
+    );
   }
 }

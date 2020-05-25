@@ -104,3 +104,7 @@ dist
 .tern-port
 
 .vscode
+
+.DS_Store
+
+request.http

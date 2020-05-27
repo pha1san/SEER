@@ -1,3 +1,4 @@
+// This js file connects the system to the Mongo DB server.
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");

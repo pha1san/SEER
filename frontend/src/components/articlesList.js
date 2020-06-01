@@ -7,7 +7,7 @@ const Article = (props) => (
     <td>{props.article.title}</td>
     <td>{props.article.author}</td>
     <td>
-      <Link to={"/edit/" + props.article._id}>link</Link>
+      <Link to={"/entries/id" + props.article._id}>link</Link>
     </td>
   </tr>
 );
@@ -20,16 +20,28 @@ export default class ArticleList extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    const { searchText } = this.props.location.state;
+    console.log(searchText);
+
     axios
-      .get("/entries/")
+      .post("/entries", { text: searchText })
       .then((response) => {
         this.setState({ articles: response.data });
+        console.log(response.data.length);
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+    // axios
+    //   .get("/entries/")
+    //   .then((response) => {
+    //     this.setState({ articles: response.data });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  };
 
   articleList() {
     return this.state.articles.map((currentArticle) => {

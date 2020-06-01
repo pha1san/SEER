@@ -11,13 +11,12 @@ export default class EditExercise extends Component {
   }
   componentDidMount() {
     axios
-      .get("/entries/" + this.props.match.params.id)
+      .get("/entries/id" + this.props.match.params.id)
       .then((response) => {
         let myString = JSON.stringify(response.data, "", " ")
           .trim()
           .replace("{", "")
           .replace("}", "");
-        console.log(myString);
         this.setState({ article: myString.replace(",", "\n") });
       })
       .catch(function (error) {

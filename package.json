@@ -2,11 +2,13 @@
   "name": "seer",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "mocha",
     "start": "cd backend && npm install && npm start",
-    "heroku-postbuild": "cd frontend && npm install && npm run build"
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "react": "cd frontend && npm start",
+    "server": "cd backend && nodemon server",
+    "dev": "concurrently -n 'server,client' -c 'red,green'  \"npm run server\" \"npm run react\""
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
   "homepage": "https://github.com/Phaisan1233/SEER#readme",
   "dependencies": {
     "mocha": "^7.1.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0"
   }
 }

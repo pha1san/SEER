@@ -23,14 +23,14 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
-const exercisesRouter = require("./routes/exercises");
+//routing
 const usersRouter = require("./routes/users");
 const entriesRouter = require("./routes/entries");
 
-app.use("/exercises", exercisesRouter);
 app.use("/users", usersRouter);
 app.use("/entries", entriesRouter);
 
+//Deploy react static
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
   app.get("*", (req, res) => {

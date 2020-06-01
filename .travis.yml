@@ -16,5 +16,3 @@ deploy:
   skip-cleanup: true
   app:
     master: cise-seer
-  on:
-    all_branches: true

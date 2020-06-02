@@ -3,11 +3,11 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { roles } = require('../roles');
 
-async function hashPassword(password){
-    return await bcrypt.hash(password, 10);
+async function hashPassword(password) {
+  return await bcrypt.hash(password, 10);
 }
-async function passwordValidator(plainPass, hashedPass){
-    return await bcrypt.compare(plainPass, hashedPass);
+async function passwordValidator(plainPass, hashedPass) {
+  return await bcrypt.compare(plainPass, hashedPass);
 }
 
 exports.signup = async (req, res, next) => {
@@ -18,16 +18,23 @@ exports.signup = async (req, res, next) => {
         const accessToken = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
         expiresIn: "1d"
     });
+    const accessToken = jwt.sign(
+      { userId: newUser._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
     newUser.accessToken = accessToken;
     await newUser.save();
     res.json({
-    data: newUser,
-    accessToken
-    })
-    } catch (error) {
-    next(error)
-    }
-}
+      data: newUser,
+      accessToken,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.login = async (req, res, next) =>{
     try{
@@ -53,7 +60,10 @@ exports.getUsers = async(req, res, next) => {
     res.status(200).json({
         data: users
     });
-}
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.getUser = async(req, res, next) =>{
     try{
@@ -101,17 +111,17 @@ exports.grantAccess = function(action, resource) {
         try{
             const permission = roles.can(req.user.role)[action](resource);
 
-            if(!permission.granted){
-                return res.status(401).json({
-                    error: "You don't have permission to perform this action."
-                });
-            }
-            next()
-        }   catch(error){
-            next(error)
-        }
+      if (!permission.granted) {
+        return res.status(401).json({
+          error: "You don't have permission to perform this action.",
+        });
+      }
+      next();
+    } catch (error) {
+      next(error);
     }
-}
+  };
+};
 
 exports.allowIfLoggedin = async (req, res, next) =>{
     try{

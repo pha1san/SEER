@@ -1,91 +1,16 @@
 const router = require("express").Router();
-let Entry = require("../models/entry.model");
-const bibtexParse = require("bibtex-parse");
+const entryController = require("../controllers/entryController.js");
 
-router.route("/").get((req, res) => {
-  Entry.find()
-    .then((entries) => res.json(entries))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+router.get("/", entryController.entries);
 
-router.route("/add").post((req, res) => {
-  const type = req.body.type;
-  const key = req.body.key;
-  const title = req.body.title;
-  const author = req.body.author;
-  const journal = req.body.journal;
-  const pages = req.body.pages;
-  const volume = req.body.volume;
-  const annote = req.body.annote;
-  const publisher = req.body.publisher;
-  const method = req.body.method;
-  const participants = req.body.participants;
-  const year = req.body.year;
-  const month = req.body.month;
+router.route("/add").post(entryController.addEntry);
 
-  const newEntry = new Entry({
-    type,
-    key,
-    title,
-    author,
-    journal,
-    pages,
-    volume,
-    annote,
-    publisher,
-    method,
-    participants,
-    year,
-    month,
-  });
+router.route("/addTDD").post(entryController.addTDD);
 
-  newEntry
-    .save()
-    .then(() => res.json("Entry added!"))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+router.route("/id:id").get(entryController.getEntry);
 
-router.route("/addall").post((req, res) => {
-  const fs = require("fs");
-  let tdd = bibtexParse.entries(fs.readFileSync("tdd_articles.bib", "utf8"));
+router.route("/").post(entryController.searchEntries);
 
-  tdd.forEach((tdd) => {
-    const newEntry = new Entry(tdd);
-    newEntry
-      .save()
-      .then(() => res.json("Entry added!"))
-      .catch((err) => res.status(400).json("Error: " + err));
-  });
-});
-
-router.route("/:id").get((req, res) => {
-  Entry.findById(req.params.id)
-    .then((entry) => res.json(entry))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
-
-/* Content from exercises.js, we don't need it at the moment but if we do we can repurpose it for entries.js
-
-router.route('/:id').delete((req, res) => {
-  Exercise.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Exercise deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/update/:id').post((req, res) => {
-  Exercise.findById(req.params.id)
-    .then(exercise => {
-      exercise.username = req.body.username;
-      exercise.description = req.body.description;
-      exercise.duration = Number(req.body.duration);
-      exercise.date = Date.parse(req.body.date);
-
-      exercise.save()
-        .then(() => res.json('Exercise updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-*/
+//router.route("/search").get();
 
 module.exports = router;

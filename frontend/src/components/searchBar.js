@@ -2,61 +2,61 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class SearchBar extends Component {
-constructor(props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-    searchText: "",
+      searchText: "",
     };
-}
+  }
 
-onSubmit = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     // const searchText = {
     //   text: this.state.searchText,
     // };
-};
+  };
 
-onChangeText = (e) => {
+  onChangeText = (e) => {
     this.setState({
-    searchText: e.target.value,
+      searchText: e.target.value,
     });
-};
+  };
 
-render() {
+  render() {
     return (
-    <div>
+      <div>
         <h3>Search Articles</h3>
         <form onSubmit={this.onSubmit}>
-        <div className="form-group">
+          <div className="form-group">
             <label>SEARCH: </label>
             <input
-            type="text"
-            className="form-control"
-            value={this.state.searchText}
-            onChange={this.onChangeText}
-            placeholder="Search..."
+              type="text"
+              className="form-control"
+              value={this.state.searchText}
+              onChange={this.onChangeText}
+              placeholder="Search..."
             />
-        </div>
-        <div className="form-group">
+          </div>
+          <div className="form-group">
             <Link
-            to={{
+              to={{
                 pathname: "/article",
                 state: {
-                searchText: this.state.searchText,
+                  searchText: this.state.searchText,
                 },
-            }}
+              }}
             >
-            <input
+              <input
                 type="submit"
                 value="Search Articles"
                 className="btn btn-primary"
-            />
+              />
             </Link>
-        </div>
+          </div>
         </form>
-    </div>
+      </div>
     );
- }
+  }
 }

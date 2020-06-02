@@ -7,6 +7,7 @@ export default class EditExercise extends Component {
     super(props);
     this.state = {
       article: "",
+      author: "",
     };
   }
   componentDidMount() {
@@ -18,6 +19,8 @@ export default class EditExercise extends Component {
           .replace("{", "")
           .replace("}", "");
         console.log(myString);
+        console.log(response.data.author);
+        this.setState({ author: response.data.author})
         this.setState({ article: myString.replace(",", "\n") });
       })
       .catch(function (error) {
@@ -29,6 +32,7 @@ export default class EditExercise extends Component {
     return (
       <div>
         <p>{this.state.article}</p>
+          <p><b>Author: </b>{this.state.author}</p> 
       </div>
     );
   }

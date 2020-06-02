@@ -24,10 +24,12 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+// The routers need to be initialised uby turning them to variables.
 const exercisesRouter = require("./routes/exercises");
 const usersRouter = require("./routes/users");
 const entriesRouter = require("./routes/entries");
 
+// This allows the server to use the routers.
 app.use("/exercises", exercisesRouter);
 app.use("/users", usersRouter);
 app.use("/entries", entriesRouter);

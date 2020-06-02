@@ -22,6 +22,7 @@ export default class CreateExercise extends Component {
     };
   }
 
+  // A react lifecycle method that is called before anything is displayed on the page.
   componentDidMount() {
     axios
       .get("users/")
@@ -92,13 +93,15 @@ export default class CreateExercise extends Component {
               className="form-control"
               value={this.state.username}
               onChange={this.onChangeUsername}>
-              {this.state.users.map(function (user) {
+              {
+              this.state.users.map(function (user) {
                 return (
                   <option key={user} value={user}>
                     {user}
                   </option>
                 );
-              })}
+              })
+            }
             </select>
           </div>
           <div className="form-group">

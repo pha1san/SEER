@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -86,10 +85,33 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
+  //numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
+  //onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
+  //rowCount: PropTypes.number.isRequired,
 };
+
+// const useToolbarStyles = makeStyles((theme) => ({
+//   root: {
+//     paddingLeft: theme.spacing(2),
+//     paddingRight: theme.spacing(1),
+//   },
+//   highlight:
+//     theme.palette.type === "light"
+//       ? {
+//           color: theme.palette.secondary.main,
+//           backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+//         }
+//       : {
+//           color: theme.palette.text.primary,
+//           backgroundColor: theme.palette.secondary.dark,
+//         },
+//   title: {
+//     flex: "1 1 100%",
+//   },
+// }));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -115,23 +137,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable(props) {
+export default function EnhancedTable() {
   const classes = useStyles();
   const [articles, setArticles] = useState([]);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("title");
+  //const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(true);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const history = useHistory();
+  useEffect(() => {
+    // function createData(title, author, year, rating, protein) {
+    //   return { title, author, year, rating };
+    // }
 
-  const fetchData = useCallback(() => {
-    const searchText =
-      props.location.state !== undefined ? props.location.state.searchText : "";
+    // const rows = [
+    //   createData("Cupcake", 305, 3.7, 67, 4.3),
+    //   createData("Donut", 452, 25.0, 51, 4.9),
+    //   createData("Eclair", 262, 16.0, 24, 6.0),
+    //   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+    //   createData("Gingerbread", 356, 16.0, 49, 3.9),
+    //   createData("Honeycomb", 408, 3.2, 87, 6.5),
+    //   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+    //   createData("Jelly Bean", 375, 0.0, 94, 0.0),
+    //   createData("KitKat", 518, 26.0, 65, 7.0),
+    //   createData("Lollipop", 392, 0.2, 98, 0.0),
+    //   createData("Marshmallow", 318, 0, 81, 2.0),
+    //   createData("Nougat", 360, 19.0, 9, 37.0),
+    //   createData("Oreo", 437, 18.0, 63, 4.0),
+    // ];
+    // setArticles(rows);
 
     axios
-      .post("/entries", { text: searchText })
+      .get("/entries")
       .then((response) => {
         setArticles(response.data);
         console.log(response.data.length);
@@ -139,11 +178,22 @@ export default function EnhancedTable(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, [props.location.state]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    // let searchText =
+    //   this.props.location.state !== undefined
+    //     ? this.props.location.state.searchText
+    //     : "";
+
+    // axios
+    //   .post("/entries", { text: searchText })
+    //   .then((response) => {
+    //     this.setState({ articles: response.data });
+    //     console.log(response.data.length);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -162,10 +212,6 @@ export default function EnhancedTable(props) {
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
-  };
-
-  const handleClick = (event, id) => {
-    history.push("/article/id" + id);
   };
 
   const emptyRows =
@@ -191,14 +237,9 @@ export default function EnhancedTable(props) {
               {stableSort(articles, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((article) => {
+                  //const isItemSelected = isSelected(row.title);
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, article._id)}
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={article._id}
-                    >
+                    <TableRow hover tabIndex={-1} key={article._id}>
                       <TableCell component="th" scope="row" padding="default">
                         {article.title}
                       </TableCell>
@@ -239,63 +280,3 @@ export default function EnhancedTable(props) {
     </div>
   );
 }
-
-// const Article = (props) => (
-//   <tr>
-//     <td>{props.article.title}</td>
-//     <td>{props.article.author}</td>
-//     <td>
-//       <Link to={"/article/id" + props.article._id}>link</Link>
-//     </td>
-//   </tr>
-// );
-
-// export default class ArticleList extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       articles: [],
-//     };
-//   }
-
-//   componentDidMount = () => {
-//     let searchText =
-//       this.props.location.state !== undefined
-//         ? this.props.location.state.searchText
-//         : "";
-
-//     axios
-//       .post("/entries", { text: searchText })
-//       .then((response) => {
-//         this.setState({ articles: response.data });
-//         console.log(response.data.length);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-
-//   articleList() {
-//     return this.state.articles.map((currentArticle) => {
-//       return <Article article={currentArticle} key={currentArticle._id} />;
-//     });
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <h3>Articles</h3>
-//         <table className="table">
-//           <thead className="thead-light">
-//             <tr>
-//               <th>Title</th>
-//               <th>Author</th>
-//               <th>Link</th>
-//             </tr>
-//           </thead>
-//           <tbody>{this.articleList()}</tbody>
-//         </table>
-//       </div>
-//     );
-//   }
-// }

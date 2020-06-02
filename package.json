@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/Phaisan1233/SEER#readme",
   "dependencies": {
+    "@material-ui/icons": "^4.9.1",
     "mocha": "^7.1.2"
   },
   "devDependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
   }
 }

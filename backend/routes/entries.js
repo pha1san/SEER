@@ -9,7 +9,9 @@ router.route("/addTDD").post(entryController.addTDD);
 
 router.route("/id:id").get(entryController.getEntry);
 
-router.route("/").post(entryController.searchEntries);
+router.route("/search/title").post(entryController.searchTitle);
+
+router.route("/search/author").post(entryController.searchAuthor);
 
 //router.route("/search").get();
 

@@ -75,7 +75,7 @@ export default class CreateExercise extends Component {
 
     console.log(exercise);
 
-    axios.post("/exercises/add", exercise).then((res) => console.log(res.data));
+    axios.post("/exercises/add", exercise).then((res) => window.alert(res.data));
 
     // window.location = '/';
   }
@@ -126,19 +126,12 @@ export default class CreateExercise extends Component {
           <div className="form-group">
             <label>Date: </label>
             <div>
-              <DatePicker
-                selected={this.state.date}
-                onChange={this.onChangeDate}
-              />
+              <DatePicker selected={this.state.date} onChange={this.onChangeDate} />
             </div>
           </div>
 
           <div className="form-group">
-            <input
-              type="submit"
-              value="Create Exercise Log"
-              className="btn btn-primary"
-            />
+            <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
           </div>
         </form>
       </div>

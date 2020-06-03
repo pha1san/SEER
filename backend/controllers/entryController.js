@@ -35,9 +35,18 @@ exports.getEntry = async (req, res, next) => {
 };
 
 // //need more work
-exports.searchEntries = async (req, res, next) => {
+exports.searchTitle = async (req, res, next) => {
   const text = req.body.text;
-  Entry.find({ title: { $regex: text, $options: "i" } })
+  await Entry.find({ title: { $regex: text, $options: "i" } })
+    .then((entries) => {
+      res.json(entries);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+exports.searchAuthor = async (req, res, next) => {
+  const text = req.body.text;
+  await Entry.find({ author: { $regex: text, $options: "i" } })
     .then((entries) => {
       res.json(entries);
     })

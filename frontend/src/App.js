@@ -10,6 +10,7 @@ import ArticleList from "./components/articlesList";
 import Article from "./components/article.js";
 import CreateUser from "./components/createUser";
 import SearchBar from "./components/searchBar";
+import SubmitArticle from "./components/submitArticle";
 import Test from "./components/test";
 //import HomePageContent from "./components/homePageContent";
 
@@ -19,10 +20,12 @@ function App() {
       <div className="container">
         <Navbar />
         <br />
-        <Route path="/" exact component={SearchBar} />
+        <Route path={["/", "/article"]} exact component={SearchBar} />
         <Route path="/article" exact component={ArticleList} />
         <Route path="/article/id:id" component={Article} />
         <Route path="/user" exact component={CreateUser} />
+        <Route path="/article/submit" component={SubmitArticle} />
+
         <Route path="/test" exact component={Test} />
       </div>
     </Router>

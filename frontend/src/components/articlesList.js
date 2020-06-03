@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+} from "@material-ui/core/";
+
 import Paper from "@material-ui/core/Paper";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
@@ -63,13 +66,11 @@ function EnhancedTableHead(props) {
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "default"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
+            sortDirection={orderBy === headCell.id ? order : false}>
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
+              onClick={createSortHandler(headCell.id)}>
               {headCell.label}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
@@ -94,6 +95,7 @@ EnhancedTableHead.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    padding: "20px 0px",
   },
   paper: {
     width: "100%",
@@ -127,11 +129,11 @@ export default function EnhancedTable(props) {
   const history = useHistory();
 
   const fetchData = useCallback(() => {
-    const searchText =
-      props.location.state !== undefined ? props.location.state.searchText : "";
+    let searchText = props.location.state !== undefined ? props.location.state.searchText : "";
+    let searchField = props.location.state !== undefined ? props.location.state.searchField : "title";
 
     axios
-      .post("/entries", { text: searchText })
+      .post("/entries/search/" + searchField, { text: searchText })
       .then((response) => {
         setArticles(response.data);
         console.log(response.data.length);
@@ -168,8 +170,7 @@ export default function EnhancedTable(props) {
     history.push("/article/id" + id);
   };
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, articles.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, articles.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -179,8 +180,7 @@ export default function EnhancedTable(props) {
             className={classes.table}
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
-            aria-label="enhanced table"
-          >
+            aria-label="enhanced table">
             <EnhancedTableHead
               classes={classes}
               order={order}
@@ -192,30 +192,31 @@ export default function EnhancedTable(props) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((article) => {
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, article._id)}
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={article._id}
-                    >
-                      <TableCell component="th" scope="row" padding="default">
+                    <TableRow hover tabIndex={-1} key={article._id}>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        padding="default"
+                        onClick={(event) => handleClick(event, article._id)}>
                         {article.title}
                       </TableCell>
-                      <TableCell align="right">{article.author}</TableCell>
-                      <TableCell align="right">{article.year}</TableCell>
+                      <TableCell align="right" onClick={(event) => handleClick(event, article._id)}>
+                        {article.author}
+                      </TableCell>
+                      <TableCell align="right" onClick={(event) => handleClick(event, article._id)}>
+                        {article.year}
+                      </TableCell>
                       <TableCell align="right">
-                        <StarRatingComponent
-                          name="rate1"
-                          starCount={5}
-                          value={4}
-                        />
+                        <StarRatingComponent name="rate1" starCount={5} value={100} />
                       </TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                <TableRow
+                  style={{
+                    height: (dense ? 33 : 53) * emptyRows,
+                  }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}

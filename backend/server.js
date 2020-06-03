@@ -24,6 +24,7 @@ connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 
+<<<<<<< HEAD
 // The routers need to be initialised uby turning them to variables.
 const exercisesRouter = require("./routes/exercises");
 const usersRouter = require("./routes/users");
@@ -31,9 +32,16 @@ const entriesRouter = require("./routes/entries");
 
 // This allows the server to use the routers.
 app.use("/exercises", exercisesRouter);
+=======
+//routing
+const usersRouter = require("./routes/users");
+const entriesRouter = require("./routes/entries");
+
+>>>>>>> origin/development
 app.use("/users", usersRouter);
 app.use("/entries", entriesRouter);
 
+//Deploy react static
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
   app.get("*", (req, res) => {

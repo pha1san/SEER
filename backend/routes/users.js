@@ -1,5 +1,5 @@
 const router = require("express").Router();
-let User = require("../models/user.model");
+let User = require("../models/userModel");
 
 // This method returns the list of users in the database.
 router.route("/").get((req, res) => {

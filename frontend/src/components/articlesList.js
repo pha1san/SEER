@@ -26,6 +26,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import StarRatingComponent from "react-star-rating-component";
 
+import Slider from "@material-ui/core/Slider";
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -170,6 +172,66 @@ EnhancedTableToolbar.propTypes = {
 };
 
 //--------------------------------------------------------------------------------------------------------------------------------
+
+const useSliderStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(3),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(1),
+  },
+}));
+
+function RangeSlider(props) {
+  const classes = useSliderStyles();
+  const [value, setValue] = React.useState([1980, 2020]);
+  const { onChangeYearRange } = props;
+
+  function valuetext(value) {
+    return value;
+  }
+
+  const minYear = {
+    value: 1980,
+    label: "1980",
+  };
+
+  const maxYear = {
+    value: 2020,
+    label: "2020",
+  };
+
+  const marks = [minYear, maxYear];
+
+  const handleChange = async (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeCommitted = (event) => {
+    onChangeYearRange(value);
+  };
+
+  return (
+    <div className={classes.root}>
+      <Typography id="range-slider" gutterBottom>
+        Year range
+      </Typography>
+      <Slider
+        value={value}
+        onChange={handleChange}
+        onChangeCommitted={handleChangeCommitted}
+        valueLabelDisplay="auto"
+        aria-labelledby="range-slider"
+        getAriaValueText={valuetext}
+        marks={marks}
+        max={maxYear.value}
+        min={minYear.value}
+      />
+    </div>
+  );
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -201,8 +263,10 @@ export default function EnhancedTable(props) {
   const [orderBy, setOrderBy] = React.useState("title");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const [copyArticles, setCopyArticles] = useState([]);
 
   const history = useHistory();
 
@@ -214,6 +278,7 @@ export default function EnhancedTable(props) {
       .post("/entries/search/" + searchField, { text: searchText })
       .then((response) => {
         setArticles(response.data);
+        setCopyArticles(response.data);
         console.log(response.data.length);
       })
       .catch((error) => {
@@ -226,53 +291,60 @@ export default function EnhancedTable(props) {
   }, [fetchData]);
 
   const handleDelete = (event) => {
-    console.log(selected);
-    console.log(articles.length);
+    // setArticles(
+    //   articles.filter((article) => {
+    //     let check = true;
+    // setSelected(
+    //   selected.filter((id) => {
+    //     // if (article._id === id) {
+    //     //   check = false;
+    //       axios
+    //         .delete("/entries/delete/id" + id)
+    //         .then((response) => {
+    //           console.log(response);
+    //         })
+    //         .catch((error) => {
+    //           console.log(error);
+    //         });
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //   })
+    // );
+    //return check;
+    //})
+    //);
 
+    selected.forEach((id) => {
+      axios
+        .delete("/entries/delete/id" + id)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+
+    window.location.reload(false);
+    console.log(articles.length);
+  };
+
+  const handleChangeYearRange = (range) => {
     setArticles(
-      articles.filter((article) => {
-        let check = true;
-        setSelected(
-          selected.filter((id) => {
-            if (article._id === id) {
-              check = false;
-              axios
-                .delete("/entries/delete/id" + id)
-                .then((response) => {
-                  console.log(response);
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-              return true;
-            } else {
-              return false;
-            }
-          })
-        );
-        return check;
+      copyArticles.filter((articles) => {
+        if (range[1] >= 2020 && range[0] <= 1980) {
+          return true;
+        } else if (range[1] >= articles.year && range[0] <= articles.year) {
+          return true;
+        } else {
+          return false;
+        }
       })
     );
-
-    console.log(articles.length);
-
-    // //   selected.filter((article) => {
-    // //     console.log(article);
-    // //     return true; //article._id !== id;
-    // //   })
-    // // );
-
-    // selected.map((id) => {
-    //   axios
-    //     .delete("/entries/delete/id" + id)
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // });
-    // // setSelected([]);setArticles(...articles.filter((article) => article._id !== id));
+    console.log("real" + articles.length);
+    console.log("copy" + copyArticles.length);
   };
 
   const handleRequestSort = (event, property) => {
@@ -330,6 +402,9 @@ export default function EnhancedTable(props) {
 
   return (
     <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <RangeSlider onChangeYearRange={handleChangeYearRange} />
+      </Paper>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} onClickDelete={handleDelete} />
         <TableContainer>
@@ -393,7 +468,7 @@ export default function EnhancedTable(props) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 15, 25]}
+          rowsPerPageOptions={[5, 10, 15, 20]}
           component="div"
           count={articles.length}
           rowsPerPage={rowsPerPage}

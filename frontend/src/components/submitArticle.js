@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class submitArticle extends Component {
@@ -114,18 +115,29 @@ export default class submitArticle extends Component {
     });
   }
 
-  onSubmit = (e) => {
+  onSubmit(e) {
     e.preventDefault();
-    axios
-      .post("/entries/add", this.state)
-      .then((res) => {
-        alert(res.data);
-        window.location = "/article";
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+
+    const article = {
+      title: this.state.title,
+      author: this.state.author,
+      type: this.state.type,
+      key: this.state.key,
+      journal: this.state.journal,
+      pages: this.state.pages,
+      volume: this.state.volume,
+      annote: this.state.annote,
+      publisher: this.state.publisher,
+      method: this.state.method,
+      participants: this.state.participants,
+      year: this.state.year,
+      month: this.state.month,
+    };
+
+    console.log(article);
+
+    axios.post("/article/add", article).then((res) => console.log(res.data));
+  }
 
   render() {
     return (
@@ -164,7 +176,12 @@ export default class submitArticle extends Component {
           </div>
           <div className="form-group">
             <label>Key: </label>
-            <input type="text" className="form-control" value={this.state.key} onChange={this.onChangeKey} />
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.key}
+              onChange={this.onChangeKey}
+            />
           </div>
           <div className="form-group">
             <label>Journal: </label>
@@ -248,7 +265,11 @@ export default class submitArticle extends Component {
             />
           </div>
           <div className="form-group">
-            <input type="submit" value="Submit Article" className="btn btn-primary" />
+            <input
+              type="submit"
+              value="Submit Article"
+              className="btn btn-primary"
+            />
           </div>
         </form>
       </div>

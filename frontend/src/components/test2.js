@@ -4,24 +4,22 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Toolbar,
-  Typography,
-  Paper,
-  Checkbox,
-  IconButton,
-  Tooltip,
-  FormControlLabel,
-  Switch,
-} from "@material-ui/core/";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import StarRatingComponent from "react-star-rating-component";
@@ -170,21 +168,17 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onClickDelete: PropTypes.func.isRequired,
 };
-
 //--------------------------------------------------------------------------------------------------------------------------------
-
 const useSliderStyles = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(3),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(2),
-    padding: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
 }));
 
 function RangeSlider(props) {
   const classes = useSliderStyles();
-  const [value, setValue] = React.useState([1980, 2020]);
+  const [value, setValue] = React.useState([2000, 2020]);
   const { onChangeYearRange } = props;
 
   function valuetext(value) {
@@ -203,12 +197,13 @@ function RangeSlider(props) {
 
   const marks = [minYear, maxYear];
 
-  const handleChange = async (event, newValue) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleChangeCommitted = (event) => {
-    onChangeYearRange(value);
+  const handleChangeCommitted = (event, newValue) => {
+    console.log(newValue);
+    onChangeYearRange(newValue);
   };
 
   return (
@@ -263,10 +258,8 @@ export default function EnhancedTable(props) {
   const [orderBy, setOrderBy] = React.useState("title");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(true);
+  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
-  const [copyArticles, setCopyArticles] = useState([]);
 
   const history = useHistory();
 
@@ -278,7 +271,6 @@ export default function EnhancedTable(props) {
       .post("/entries/search/" + searchField, { text: searchText })
       .then((response) => {
         setArticles(response.data);
-        setCopyArticles(response.data);
         console.log(response.data.length);
       })
       .catch((error) => {
@@ -291,60 +283,62 @@ export default function EnhancedTable(props) {
   }, [fetchData]);
 
   const handleDelete = (event) => {
-    // setArticles(
-    //   articles.filter((article) => {
-    //     let check = true;
-    // setSelected(
-    //   selected.filter((id) => {
-    //     // if (article._id === id) {
-    //     //   check = false;
-    //       axios
-    //         .delete("/entries/delete/id" + id)
-    //         .then((response) => {
-    //           console.log(response);
-    //         })
-    //         .catch((error) => {
-    //           console.log(error);
-    //         });
-    //       return true;
-    //     } else {
-    //       return false;
-    //     }
-    //   })
-    // );
-    //return check;
-    //})
-    //);
+    setArticles(
+      articles.filter((article) => {
+        let check = true;
+        setSelected(
+          selected.filter((id) => {
+            if (article._id === id) {
+              check = false;
+              axios
+                .delete("/entries/delete/id" + id)
+                .then(() => {
+                  console.log("Deleted");
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+              return true;
+            } else {
+              return false;
+            }
+          })
+        );
+        return check;
+      })
+    );
 
-    selected.forEach((id) => {
-      axios
-        .delete("/entries/delete/id" + id)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+    // //   selected.filter((article) => {
+    // //     console.log(article);
+    // //     return true; //article._id !== id;
+    // //   })
+    // // );
 
-    window.location.reload(false);
-    console.log(articles.length);
+    // selected.map((id) => {
+    //   axios
+    //     .delete("/entries/delete/id" + id)
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // });
+    // // setSelected([]);setArticles(...articles.filter((article) => article._id !== id));
   };
 
   const handleChangeYearRange = (range) => {
+    console.log(range);
+
     setArticles(
-      copyArticles.filter((articles) => {
-        if (range[1] >= 2020 && range[0] <= 1980) {
-          return true;
-        } else if (range[1] >= articles.year && range[0] <= articles.year) {
+      articles.filter((articles) => {
+        if (range[1] > articles.year && range[0] < articles.year) {
           return true;
         } else {
           return false;
         }
       })
     );
-    console.log("real" + articles.length);
-    console.log("copy" + copyArticles.length);
   };
 
   const handleRequestSort = (event, property) => {
@@ -468,7 +462,7 @@ export default function EnhancedTable(props) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 15, 20]}
+          rowsPerPageOptions={[10, 15, 25]}
           component="div"
           count={articles.length}
           rowsPerPage={rowsPerPage}
@@ -481,63 +475,3 @@ export default function EnhancedTable(props) {
     </div>
   );
 }
-
-// const Article = (props) => (
-//   <tr>
-//     <td>{props.article.title}</td>
-//     <td>{props.article.author}</td>
-//     <td>
-//       <Link to={"/article/id" + props.article._id}>link</Link>
-//     </td>
-//   </tr>
-// );
-
-// export default class ArticleList extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       articles: [],
-//     };
-//   }
-
-//   componentDidMount = () => {
-//     let searchText =
-//       this.props.location.state !== undefined
-//         ? this.props.location.state.searchText
-//         : "";
-
-//     axios
-//       .post("/entries", { text: searchText })
-//       .then((response) => {
-//         this.setState({ articles: response.data });
-//         console.log(response.data.length);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-
-//   articleList() {
-//     return this.state.articles.map((currentArticle) => {
-//       return <Article article={currentArticle} key={currentArticle._id} />;
-//     });
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <h3>Articles</h3>
-//         <table className="table">
-//           <thead className="thead-light">
-//             <tr>
-//               <th>Title</th>
-//               <th>Author</th>
-//               <th>Link</th>
-//             </tr>
-//           </thead>
-//           <tbody>{this.articleList()}</tbody>
-//         </table>
-//       </div>
-//     );
-//   }
-// }

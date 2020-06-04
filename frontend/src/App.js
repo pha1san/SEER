@@ -11,8 +11,10 @@ import Article from "./components/article.js";
 import CreateUser from "./components/createUser";
 import SearchBar from "./components/searchBar";
 import SubmitArticle from "./components/submitArticle";
+import HomePage from "./components/homePage";
+
 import Test from "./components/test";
-//import HomePageContent from "./components/homePageContent";
+import Test2 from "./components/test2";
 
 function App() {
   return (
@@ -20,13 +22,15 @@ function App() {
       <div className="container">
         <Navbar />
         <br />
-        <Route path={["/", "/article"]} exact component={SearchBar} />
+        <Route path="/" exact component={HomePage} />
+        <Route path="/article" exact component={SearchBar} />
         <Route path="/article" exact component={ArticleList} />
         <Route path="/article/id:id" component={Article} />
         <Route path="/user" exact component={CreateUser} />
         <Route path="/article/submit" component={SubmitArticle} />
 
         <Route path="/test" exact component={Test} />
+        <Route path="/test2" exact component={Test2} />
       </div>
     </Router>
   );

@@ -13,6 +13,8 @@ router.route("/search/title").post(entryController.searchTitle);
 
 router.route("/search/author").post(entryController.searchAuthor);
 
+router.route("/delete/id:id").delete(entryController.delete);
+
 //router.route("/search").get();
 
 module.exports = router;

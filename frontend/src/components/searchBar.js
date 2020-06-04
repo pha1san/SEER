@@ -40,6 +40,7 @@ export default class SearchBar extends Component {
           aria-label="Text input with segmented dropdown button"
           value={this.state.searchText}
           onChange={this.onChangeText}
+          placeholder="Search articles..."
         />
         <div className="input-group-append">
           <select

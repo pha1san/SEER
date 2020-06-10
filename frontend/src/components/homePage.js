@@ -11,7 +11,7 @@ class homePageContent extends Component {
   }
 }
 const searchBarStyle = {
-  width: "85%",
+  width: "55%",
   position: "absolute",
   left: "50%",
   top: "50%",

@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
+const login = require("../routes/loginroutes");
 
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
@@ -11,7 +12,31 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI || "mongodb://localhost:27017/seer";
+/*
+The next few lines of code is related to the User Login
+*/
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+const router = express.Router();
+
+// test route
+routerHeight.get("/", function(req, res) {
+  rescape.json({ message: "welcome to our upload module apis"
+});
+});
+
+router.post("/register", login.register);
+router.post("/login", login.login);
+app.use("/api", router);
+app.listen(4000);
+/*
+This is the end of the user Login lines of code
+*/
+
+const uri = process.env.ATLAS_URI  ;
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,

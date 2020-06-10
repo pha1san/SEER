@@ -12,7 +12,8 @@ import CreateUser from "./components/createUser";
 import SearchBar from "./components/searchBar";
 import SubmitArticle from "./components/submitArticle";
 import HomePage from "./components/homePage";
-
+import UserLogin from "./components/userLogin";
+import Register from "./components/register";
 import Test from "./components/test";
 import Test2 from "./components/test2";
 
@@ -28,7 +29,8 @@ function App() {
         <Route path="/article/id:id" component={Article} />
         <Route path="/user" exact component={CreateUser} />
         <Route path="/article/submit" component={SubmitArticle} />
-
+        <Route path ="/login" exact component={UserLogin} />
+        <Route path ="/register" exact component={Register} />
         <Route path="/test" exact component={Test} />
         <Route path="/test2" exact component={Test2} />
       </div>

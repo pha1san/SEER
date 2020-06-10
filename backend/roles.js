@@ -9,6 +9,15 @@ exports.roles = (function(){
     .readOwn("profile")
     .updateOwn("profile")
 
+    ac.grant("moderator")
+    .extend("searcher")
+
+    ac.grant("submitter")
+    .extend("searcher")
+
+    ac.grant("analyst")
+    .extend("searcher")
+
     ac.grant("administrator")
     .extend("searcher")
     .readAny("profile")

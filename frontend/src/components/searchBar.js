@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-//import { makeStyles } from "@material-ui/core/styles";
+
 export default class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -10,14 +10,6 @@ export default class SearchBar extends Component {
       selection: "title",
     };
   }
-
-  // onSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   // const searchText = {
-  //   //   text: this.state.searchText,
-  //   // };
-  // };
 
   onChangeText = (e) => {
     this.setState({

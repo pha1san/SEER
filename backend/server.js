@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-const login = require("../routes/loginroutes");
+// const login = require("../routes/loginroutes");
 
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
@@ -14,7 +14,6 @@ app.use(express.json());
 
 /*
 The next lines of code relate to the login function
-*/
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -35,7 +34,6 @@ router.post("/register", login.register);
 router.post("/login", login.login);
 app.use("/api", router);
 app.listen(4000);
-/*
 This is the end of the first part of the login
 */
 

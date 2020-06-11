@@ -2,6 +2,7 @@ const router = require("express").Router();
 const userController = require("../controllers/userController.js");
 let User = require("../models/userModel");
 
+/*
 router.get("/", userController.users);
 
 router.route("/signup/").post(userController.signup);
@@ -13,7 +14,7 @@ router.route("/updateUser").post(userController.updateUser);
 router.route("/deleteUser/id").post(userController.updateUser);
 
 router.route("/")
-
+*/
 // router.route("/").get((req, res) => {
 //   User.find()
 //     .then((users) => res.json(users))

@@ -22,7 +22,8 @@
   "homepage": "https://github.com/Phaisan1233/SEER#readme",
   "dependencies": {
     "@material-ui/icons": "^4.9.1",
-    "mocha": "^7.1.2"
+    "mocha": "^7.1.2",
+    "react-star-ratings": "^2.3.0"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",

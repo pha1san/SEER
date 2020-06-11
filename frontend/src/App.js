@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 // import { Button } from "@material-ui/core";
 // import Box from "@material-ui/core/Box";
 import Navbar from "./components/navbar";
-import ArticleList from "./components/articlesList";
+import ArticleList from "./components/articleTable/articlesList";
 import Article from "./components/article.js";
 import CreateUser from "./components/createUser";
 import SearchBar from "./components/searchBar";

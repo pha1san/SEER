@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-//const login = require("../routes/loginroutes");
+// const login = require("../routes/loginroutes");
 
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
@@ -33,12 +33,10 @@ router.post("/register", login.register);
 router.post("/login", login.login);
 app.use("/api", router);
 app.listen(4000);
-/*
-This is the end of the user Login lines of code
+This is the end of the first part of the login
 */
 
-
-const uri = process.env.ATLAS_URI  ;
+const uri = process.env.ATLAS_URI || "mongodb://localhost:27017/seer";
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,

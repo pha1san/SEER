@@ -51,7 +51,7 @@ export default class SearchBar extends Component {
             className="btn btn-outline-secondary"
             type="button"
             to={{
-              pathname: "/article",
+              pathname: "/article/role=searcher",
               state: {
                 searchText: this.state.searchText,
                 searchField: this.state.selection,

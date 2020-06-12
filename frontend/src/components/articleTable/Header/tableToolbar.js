@@ -26,9 +26,13 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export default function EnhancedTableToolbar(props) {
   const classes = useToolbarStyles();
-  const { numSelected, onClickDelete } = props;
+  const { numSelected, onClickDelete, role } = props;
 
   return (
     <Toolbar className={clsx(classes.root, { [classes.highlight]: numSelected > 0 })}>
@@ -38,7 +42,7 @@ export default function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Articles
+          {capitalizeFirstLetter(role)} Articles
         </Typography>
       )}
       {numSelected > 0 ? (

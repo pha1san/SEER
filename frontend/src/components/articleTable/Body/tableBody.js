@@ -32,7 +32,7 @@ function stableSort(array, comparator) {
 }
 
 export default function EnhancedTableBody(props) {
-  const { articles, order, orderBy, page, rowsPerPage, isSelected, handleClick, dense } = props;
+  const { articles, order, orderBy, page, rowsPerPage, isSelected, handleClick, dense, role } = props;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, articles.length - page * rowsPerPage);
 
@@ -52,16 +52,29 @@ export default function EnhancedTableBody(props) {
               tabIndex={-1}
               key={article._id}
               selected={isItemSelected}>
-              <TableCell padding="checkbox">
-                <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
-              </TableCell>
+              {role === "admin" && (
+                <TableCell padding="checkbox">
+                  <Checkbox checked={isItemSelected} inputProps={{ "aria-labelledby": labelId }} />
+                </TableCell>
+              )}
+              {role === "moderator" && <TableCell>{new Date(article.createdAt).toLocaleDateString()}</TableCell>}
+              {role === "analyst" && <TableCell>{new Date(article.createdAt).toLocaleDateString()}</TableCell>}
+
               <TableCell
                 component="th"
                 scope="row"
                 padding="default"
                 width="50%"
                 onClick={(event) => handleClick(event, article._id)}>
-                <Link to={"/article/id" + article._id}>{article.title}</Link>
+                <Link
+                  to={{
+                    pathname: "/article/id" + article._id,
+                    state: {
+                      role: role,
+                    },
+                  }}>
+                  {article.title}
+                </Link>
               </TableCell>
               <TableCell align="left" width="30%">
                 {article.author}

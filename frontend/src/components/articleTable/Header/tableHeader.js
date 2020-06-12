@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { TableCell, TableHead, TableRow, TableSortLabel, Checkbox } from "@material-ui/core/";
 
-const headCells = [
-  { id: "title", numeric: false, disablePadding: false, label: "Title" },
-  { id: "author", numeric: false, disablePadding: false, label: "Author" },
-  { id: "year", numeric: false, disablePadding: false, label: "Year" },
-  { id: "rating", numeric: false, disablePadding: false, label: "Rating" },
-];
-
+let headCells = [];
 export default function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, role } = props;
+
+  useEffect(() => {
+    if (role === "moderator" || role === "analyst") {
+      headCells = [
+        { id: "createdAt", numeric: false, disablePadding: false, label: "Date" },
+        { id: "title", numeric: false, disablePadding: false, label: "Title" },
+        { id: "author", numeric: false, disablePadding: false, label: "Author" },
+        { id: "year", numeric: false, disablePadding: false, label: "Year" },
+        { id: "rating", numeric: false, disablePadding: false, label: "Rating" },
+      ];
+    } else {
+      headCells = [
+        { id: "title", numeric: false, disablePadding: false, label: "Title" },
+        { id: "author", numeric: false, disablePadding: false, label: "Author" },
+        { id: "year", numeric: false, disablePadding: false, label: "Year" },
+        { id: "rating", numeric: false, disablePadding: false, label: "Rating" },
+      ];
+    }
+  }, [role]);
 
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -19,14 +32,16 @@ export default function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all desserts" }}
-          />
-        </TableCell>
+        {role === "admin" && (
+          <TableCell padding="checkbox">
+            <Checkbox
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+              checked={rowCount > 0 && numSelected === rowCount}
+              onChange={onSelectAllClick}
+              inputProps={{ "aria-label": "select all desserts" }}
+            />
+          </TableCell>
+        )}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}

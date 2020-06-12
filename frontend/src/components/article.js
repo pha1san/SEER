@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import Button from "@material-ui/core/Button";
 
 export default class Article extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Article extends Component {
       participants: "",
       year: "",
       month: "",
+      role: props.location.state !== undefined ? props.location.state.role : "",
     };
   }
 
@@ -82,6 +84,28 @@ export default class Article extends Component {
           <b>Month: </b>
           {this.state.month}
         </p>
+        <hr />
+        {this.state.role === "moderator" && (
+          <div>
+            <Button variant="contained" color="primary">
+              Accept
+            </Button>
+
+            <Button variant="contained" color="secondary">
+              Reject
+            </Button>
+          </div>
+        )}
+        {this.state.role === "analyst" && (
+          <div>
+            <Button variant="contained" color="primary">
+              Accept
+            </Button>{" "}
+            <Button variant="contained" color="secondary">
+              Reject
+            </Button>
+          </div>
+        )}
         <hr />
       </div>
     );

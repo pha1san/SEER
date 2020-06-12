@@ -42,23 +42,64 @@ export default function EnhancedTable(props) {
   const [dense, setDense] = React.useState(true);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  let [filterArticles, setFilterArticles] = useState([]);
+  const role = props.match.params.role;
+
+  const [filterArticles, setFilterArticles] = useState([]);
 
   const fetchData = useCallback(() => {
     let searchText = props.location.state !== undefined ? props.location.state.searchText : "";
     let searchField = props.location.state !== undefined ? props.location.state.searchField : "title";
 
-    axios
-      .post("/entries/search/" + searchField, { text: searchText })
-      .then((response) => {
-        setArticles(response.data);
-        setFilterArticles(response.data);
-        console.log(response.data.length);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [props.location.state]);
+    switch (role) {
+      case "moderator":
+        console.log("pass this");
+        axios
+          .get("/entries/")
+          .then((response) => {
+            setArticles(response.data);
+            setFilterArticles(response.data);
+            console.log(response.data.length);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        break;
+      case "analyst":
+        console.log("pass this");
+        axios
+          .get("/entries/")
+          .then((response) => {
+            setArticles(response.data);
+            setFilterArticles(response.data);
+            console.log(response.data.length);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        break;
+      default:
+        axios
+          .post("/entries/search/" + searchField, { text: searchText })
+          .then((response) => {
+            setArticles(response.data);
+            setFilterArticles(response.data);
+            console.log(response.data.length);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
+    // axios
+    //   .post("/entries/search/" + searchField, { text: searchText })
+    //   .then((response) => {
+    //     setArticles(response.data);
+    //     setFilterArticles(response.data);
+    //     console.log(response.data.length);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  }, [props.location.state, role]);
 
   useEffect(() => {
     fetchData();
@@ -149,7 +190,7 @@ export default function EnhancedTable(props) {
         <TableYearSlider onChangeYearRange={handleChangeYearRange} />
       </Paper>
       <Paper className={classes.paper}>
-        <TableToolbar numSelected={selected.length} onClickDelete={handleDelete} />
+        <TableToolbar numSelected={selected.length} onClickDelete={handleDelete} role={role} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -164,6 +205,7 @@ export default function EnhancedTable(props) {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={articles.length}
+              role={role}
             />
             <TableBody
               articles={articles}
@@ -174,6 +216,7 @@ export default function EnhancedTable(props) {
               isSelected={isSelected}
               handleClick={handleClick}
               dense={dense}
+              role={role}
             />
           </Table>
         </TableContainer>

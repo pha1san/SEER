@@ -120,7 +120,7 @@ export default class submitArticle extends Component {
       .post("/entries/add", this.state)
       .then((res) => {
         alert(res.data);
-        window.location = "/article";
+        window.location = "/article/role=searcher";
       })
       .catch((error) => {
         alert(error);
@@ -154,13 +154,7 @@ export default class submitArticle extends Component {
           </div>
           <div className="form-group">
             <label>Type: </label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={this.state.type}
-              onChange={this.onChangeType}
-            />
+            <input type="text" required className="form-control" value={this.state.type} onChange={this.onChangeType} />
           </div>
           <div className="form-group">
             <label>Key: </label>
@@ -168,39 +162,19 @@ export default class submitArticle extends Component {
           </div>
           <div className="form-group">
             <label>Journal: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.journal}
-              onChange={this.onChangeJournal}
-            />
+            <input type="text" className="form-control" value={this.state.journal} onChange={this.onChangeJournal} />
           </div>
           <div className="form-group">
             <label>Pages: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.pages}
-              onChange={this.onChangePages}
-            />
+            <input type="text" className="form-control" value={this.state.pages} onChange={this.onChangePages} />
           </div>
           <div className="form-group">
             <label>Volume: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.volume}
-              onChange={this.onChangeVolume}
-            />
+            <input type="text" className="form-control" value={this.state.volume} onChange={this.onChangeVolume} />
           </div>
           <div className="form-group">
             <label>Annote: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.annote}
-              onChange={this.onChangeAnnote}
-            />
+            <input type="text" className="form-control" value={this.state.annote} onChange={this.onChangeAnnote} />
           </div>
           <div className="form-group">
             <label>Publisher: </label>
@@ -213,12 +187,7 @@ export default class submitArticle extends Component {
           </div>
           <div className="form-group">
             <label>Method: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.method}
-              onChange={this.onChangeMethod}
-            />
+            <input type="text" className="form-control" value={this.state.method} onChange={this.onChangeMethod} />
           </div>
           <div className="form-group">
             <label>Participants: </label>
@@ -231,21 +200,11 @@ export default class submitArticle extends Component {
           </div>
           <div className="form-group">
             <label>Year: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.year}
-              onChange={this.onChangeYear}
-            />
+            <input type="text" className="form-control" value={this.state.year} onChange={this.onChangeYear} />
           </div>
           <div className="form-group">
             <label>Month: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.month}
-              onChange={this.onChangeMonth}
-            />
+            <input type="text" className="form-control" value={this.state.month} onChange={this.onChangeMonth} />
           </div>
           <div className="form-group">
             <input type="submit" value="Submit Article" className="btn btn-primary" />

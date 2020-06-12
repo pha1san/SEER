@@ -65,12 +65,3 @@ exports.delete = async (req, res, next) => {
     })
     .catch((err) => res.status(400).json("Error: " + err));
 };
-
-// router.route("/search").get((req, res) => {
-//   const text = req.query.q;
-//   Entry.find({ title: { $regex: text, $options: "i" } })
-//     .then((entries) => {
-//       res.json(entries);
-//     })
-//     .catch((err) => res.status(400).json("Error: " + err));
-// });

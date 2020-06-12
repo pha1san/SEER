@@ -26,13 +26,7 @@ exports.signup = async (req, res, next) => {
         expiresIn: "1d",
       }
     );
-    const accessToken = jwt.sign(
-      { userId: newUser._id },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1d",
-      }
-    );
+    
     newUser.accessToken = accessToken;
     await newUser.save();
     res.json({

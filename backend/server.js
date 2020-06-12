@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 // const login = require("../routes/loginroutes");
 
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+require("dotenv").config({
+  path: path.join(__dirname, "../.env")
+});
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -13,23 +15,22 @@ app.use(cors());
 app.use(express.json());
 
 /*
-The next lines of code relate to the login function
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+The next few lines of code is related to the User Login
 
-app.use(function(res, req, next) {
+app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
-
-var router = express.Router();
-
+const router = express.Router();
+*/
+/*
 // test route
-router.get("/", function(req, res) {
-  res.json({ message: "welcome to our upload module apis"});
+routerHeight.get("/", function(req, res) {
+  rescape.json({ message: "welcome to our upload module apis"
+});
 });
 
-// route to handle user registration
 router.post("/register", login.register);
 router.post("/login", login.login);
 app.use("/api", router);
@@ -52,9 +53,13 @@ connection.once("open", () => {
 //routing
 const usersRouter = require("./routes/users");
 const entriesRouter = require("./routes/entries");
+const moderatorRouter = require("./routes/moderator");
+const analystRouter = require("./routes/analyst"); 
 
 app.use("/users", usersRouter);
 app.use("/entries", entriesRouter);
+app.use("/moderator", moderatorRouter); // Moderator queue? 
+app.use("/analyst", analystRouter); 
 
 //Deploy react static
 if (process.env.NODE_ENV === "production") {

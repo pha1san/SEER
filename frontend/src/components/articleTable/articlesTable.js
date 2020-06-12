@@ -52,9 +52,8 @@ export default function EnhancedTable(props) {
 
     switch (role) {
       case "moderator":
-        console.log("pass this");
         axios
-          .get("/entries/")
+          .get("/" + role + "/")
           .then((response) => {
             setArticles(response.data);
             setFilterArticles(response.data);
@@ -65,9 +64,8 @@ export default function EnhancedTable(props) {
           });
         break;
       case "analyst":
-        console.log("pass this");
         axios
-          .get("/entries/")
+          .get("/" + role + "/")
           .then((response) => {
             setArticles(response.data);
             setFilterArticles(response.data);

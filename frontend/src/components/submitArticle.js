@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 export default class submitArticle extends Component {
   constructor(props) {
@@ -115,10 +113,10 @@ export default class submitArticle extends Component {
     });
   }
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("/entries/add", this.state)
+      .post("/moderator/add", this.state)
       .then((res) => {
         alert(res.data);
         window.location = "/article/role=searcher";
@@ -126,7 +124,7 @@ export default class submitArticle extends Component {
       .catch((error) => {
         alert(error);
       });
-  }
+  };
 
   render() {
     return (

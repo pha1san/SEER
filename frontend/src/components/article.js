@@ -26,16 +26,68 @@ export default class Article extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get("/entries/id" + this.props.match.params.id)
-      .then((response) => {
-        console.log(response.data);
-        this.setState(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    switch (this.state.role) {
+      case "moderator":
+        axios
+          .get("/" + this.state.role + "/id" + this.props.match.params.id)
+          .then((response) => {
+            console.log(response.data);
+            this.setState(response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        break;
+      case "analyst":
+        axios
+          .get("/" + this.state.role + "/id" + this.props.match.params.id)
+          .then((response) => {
+            console.log(response.data);
+            this.setState(response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        break;
+      default:
+        axios
+          .get("/entries/id" + this.props.match.params.id)
+          .then((response) => {
+            console.log(response.data);
+            this.setState(response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
   }
+
+  handleAccept = (e) => {
+    e.preventDefault();
+    axios
+      .post("/" + this.state.role + "/move", { id: this.props.match.params.id })
+      .then((res) => {
+        alert(res.data);
+        window.location = "/article/role=" + this.state.role;
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
+  handleReject = (e) => {
+    e.preventDefault();
+    axios
+      .delete("/" + this.state.role + "/delete/id" + this.props.match.params.id)
+      .then((res) => {
+        alert(res.data.title + " Deleted");
+        console.log(res);
+        window.location = "/article/role=" + this.state.role;
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
   render() {
     return (
@@ -87,21 +139,22 @@ export default class Article extends Component {
         <hr />
         {this.state.role === "moderator" && (
           <div>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={this.handleAccept}>
               Accept
             </Button>
 
-            <Button variant="contained" color="secondary">
+            <Button variant="contained" color="secondary" onClick={this.handleReject}>
               Reject
             </Button>
           </div>
         )}
         {this.state.role === "analyst" && (
           <div>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={this.handleAccept}>
               Accept
-            </Button>{" "}
-            <Button variant="contained" color="secondary">
+            </Button>
+
+            <Button variant="contained" color="secondary" onClick={this.handleReject}>
               Reject
             </Button>
           </div>

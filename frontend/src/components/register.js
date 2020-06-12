@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import SearchBar from "./userLogin";
-import axios from "axios";
-
+// import SearchBar from "./userLogin";
+// import axios from "axios";
 
 export default class Register extends Component {
   constructor(props) {
@@ -9,11 +8,11 @@ export default class Register extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
     };
   }
 
-/*
+  /*
   onChangeUsername = (e) => {
     this.setState({
       username: e.target.value,
@@ -51,9 +50,8 @@ export default class Register extends Component {
               className="form-control"
               //value={this.state.username}
               //onChange={this.onChangeUsername}
-              onChange = {(event, newValue) => this.setState({username:newValue})}
+              onChange={(event, newValue) => this.setState({ username: newValue })}
             />
-          
           </div>
           <div className="form-group">
             <label>Password: </label>
@@ -63,16 +61,11 @@ export default class Register extends Component {
               className="form-control"
               // value={this.state.password}
               // onChange={this.onChangeUsername}
-              onChange = {(event, newValue) => this.setState({password:newValue})}
+              onChange={(event, newValue) => this.setState({ password: newValue })}
             />
-          
           </div>
           <div className="form-group">
-            <input
-              type="submit"
-              value="Login"
-              className="btn btn-primary"
-            />
+            <input type="submit" value="Login" className="btn btn-primary" />
           </div>
         </form>
       </div>

@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 // const login = require("../routes/loginroutes");
 
-require("dotenv").config({ path: path.join(__dirname, "../.env") });
+require("dotenv").config({
+  path: path.join(__dirname, "../.env")
+});
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -51,9 +53,13 @@ connection.once("open", () => {
 //routing
 const usersRouter = require("./routes/users");
 const entriesRouter = require("./routes/entries");
+const moderatorRouter = require("./routes/moderator");
+const analystRouter = require("./routes/analyst"); 
 
 app.use("/users", usersRouter);
 app.use("/entries", entriesRouter);
+app.use("/moderator", moderatorRouter); // Moderator queue? 
+app.use("/analyst", analystRouter); 
 
 //Deploy react static
 if (process.env.NODE_ENV === "production") {

@@ -46,6 +46,18 @@ export default class SearchBar extends Component {
             <option key={"author"} value={"author"}>
               Author
             </option>
+            <option key={"publisher"} value={"publisher"}>
+              Publisher
+            </option>
+            <option key={"method"} value={"method"}>
+              Methodology
+            </option>
+            <option key={"participants"} value={"participants"}>
+              Participants
+            </option>
+            <option key={"journal"} value={"journal"}>
+              Journal
+            </option>
           </select>
           <Link
             className="btn btn-outline-secondary"

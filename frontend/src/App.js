@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 // import Box from "@material-ui/core/Box";
 import Navbar from "./components/navbar";
 import ArticleList from "./components/articleTable/articlesList";
+//import AnalystArticleList from "./components/articleTable/analystArticleList";
+//import ModeratorArticleList from "./components/articleTable/moderatorArticleList";
 import Article from "./components/article.js";
 import CreateUser from "./components/createUser";
 import SearchBar from "./components/searchBar";
@@ -27,6 +29,7 @@ function App() {
         <Route path="/article" exact component={SearchBar} />
         <Route path="/article" exact component={ArticleList} />
         <Route path="/article/id:id" component={Article} />
+        
         <Route path="/user" exact component={CreateUser} />
         <Route path="/article/submit" component={SubmitArticle} />
         <Route path ="/login" exact component={UserLogin} />
@@ -37,6 +40,7 @@ function App() {
     </Router>
   );
 }
+
 /*
 export default function App() {
   return (

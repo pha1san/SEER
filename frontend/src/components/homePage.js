@@ -5,34 +5,34 @@ import { CardMedia } from '@material-ui/core';
 class homePageContent extends Component {
   render() {
     return (
-      /*<div style = {imgStyle}>
-        <CardMedia
-      className={classes.imgStyle}
-      image="./public/SEERhomepageimg"
-      title="SEER Homepage"
-        />
-      </div>
-      */
-
-      <div style={searchBarStyle}>
-        <SearchBar />
+      <div>
+        <div style={imgStyle}>
+          <img src={ require("./SEERhomeimage2.jpg")} alt="SEERhomepage" width="75%" position="absolute" left="50%" top="50%"></img>
+        </div>
+        <div style={searchBarStyle}>
+          <SearchBar />
+        </div>  
       </div>
     );
   }
 }
 
 const imgStyle = {
-  height: "0",
-  paddingTop: "56.25",
-  marginTop: "30"
+  width: "55%",
+  position: "absolute",
+  left: "56%",
+  top: "40%",
+  transform: "translate(-50%, -50%)",
 }
+
 
 const searchBarStyle = {
   width: "55%",
   position: "absolute",
-  left: "50%",
-  top: "50%",
+  left: "51%",
+  top: "70%",
   transform: "translate(-50%, -50%)",
 };
+
 
 export default homePageContent;

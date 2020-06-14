@@ -23,5 +23,7 @@ const entrySchema = new Schema(
 );
 
 const Entry = mongoose.model("Entry", entrySchema);
+const Analyst = mongoose.model("Analyst", entrySchema);
+const Moderator = mongoose.model("Moderator", entrySchema);
 
-module.exports = Entry;
+module.exports = { Entry, Analyst, Moderator };

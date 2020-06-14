@@ -84,7 +84,7 @@ export default function EnhancedTableBody(props) {
               </TableCell>
               <TableCell align="left" width="5%">
                 <StarRatings
-                  rating={4.5}
+                  rating={Math.random() * 5 + 0.5}
                   starDimension="13px"
                   starSpacing="0px"
                   numberOfStars={5}

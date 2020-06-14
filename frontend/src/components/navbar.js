@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import logo from "./SEERhomeimage2copy.jpg";
 
+const logoStyle = {
+  width: "50px",
+  borderRadius: "50%",
+};
 export default class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
         <Link to="/" className="navbar-brand">
-          SEER
+          <img src={logo} style={logoStyle} alt="logo" />
         </Link>
         <div className="collpase navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
-              <Link to="/article/role=searcher" className="nav-link">
+              <Link href="%PUBLIC_URL%/SEERlogo.png" to="/article/role=searcher" className="nav-link">
                 Article List
               </Link>
             </li>

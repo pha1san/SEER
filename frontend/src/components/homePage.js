@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import SearchBar from "./searchBar";
-import { CardMedia } from "@material-ui/core";
 
 class homePageContent extends Component {
   render() {

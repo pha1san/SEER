@@ -1,6 +1,7 @@
-const Entry = require("../models/entryModel");
-const bibtexParse = require("bibtex-parse");
-const fs = require("fs");
+const { Entry } = require("../models/entryModel");
+//const bibtexParse = require("bibtex-parse");
+//const fs = require("fs");
+const tdd = require("../tdd_articles.json");
 
 exports.entries = async (req, res, next) => {
   await Entry.find()
@@ -17,15 +18,17 @@ exports.addEntry = async (req, res, next) => {
 };
 
 exports.addTDD = (req, res, next) => {
-  let tdd = bibtexParse.entries(fs.readFileSync("tdd_articles.bib", "utf8"));
-
-  tdd.forEach(async (tdd) => {
-    const newEntry = new Entry(tdd);
-    await newEntry
-      .save()
-      .then(() => res.json("Entry added!"))
-      .catch((err) => res.status(400).json("Error: " + err));
-  });
+  //let tdd = bibtexParse.entries(fs.readFileSync("tdd_articles.bib", "utf8"));
+  Entry.insertMany(tdd)
+    .then(() => res.json("Entry added!"))
+    .catch((err) => res.status(400).json("Error: " + err));
+  // tdd.forEach(async (tdd) => {
+  //   const newEntry = new Entry(tdd);
+  //   await newEntry
+  //     .save()
+  //     .then(() => res.json("Entry added!"))
+  //     .catch((err) => res.status(400).json("Error: " + err));
+  // });
 };
 
 exports.getEntry = async (req, res, next) => {

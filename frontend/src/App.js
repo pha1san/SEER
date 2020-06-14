@@ -1,10 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
-// import { Container } from "@material-ui/core";
-// import { Button } from "@material-ui/core";
-// import Box from "@material-ui/core/Box";
 import Navbar from "./components/navbar";
 import ArticleList from "./components/articleTable/articlesTable";
 import Article from "./components/article.js";

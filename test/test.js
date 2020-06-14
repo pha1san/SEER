@@ -29,18 +29,7 @@ describe("------------ API Routing ------------", () => {
         .request(app)
         .get("/entries")
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a("array");
-          done();
-        });
-    }).timeout(5000);
-    it("Should get an array of articles", (done) => {
-      chai
-        .request(app)
-        .get("/entries")
-        .end((err, res) => {
-          console.log(res.body);
-
+          console.log(res.body.length);
           res.should.have.status(200);
           res.body.should.be.a("array");
           done();

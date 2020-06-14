@@ -5,7 +5,7 @@ const path = require("path");
 // const login = require("../routes/loginroutes");
 
 require("dotenv").config({
-  path: path.join(__dirname, "../.env")
+  path: path.join(__dirname, "../.env"),
 });
 
 const app = express();
@@ -54,12 +54,12 @@ connection.once("open", () => {
 const usersRouter = require("./routes/users");
 const entriesRouter = require("./routes/entries");
 const moderatorRouter = require("./routes/moderator");
-const analystRouter = require("./routes/analyst"); 
+const analystRouter = require("./routes/analyst");
 
 app.use("/users", usersRouter);
 app.use("/entries", entriesRouter);
-app.use("/moderator", moderatorRouter); // Moderator queue? 
-app.use("/analyst", analystRouter); 
+app.use("/moderator", moderatorRouter); // Moderator queue?
+app.use("/analyst", analystRouter);
 
 //Deploy react static
 if (process.env.NODE_ENV === "production") {
@@ -72,3 +72,5 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
 });
+
+module.exports = { app, mongoose };

@@ -39,6 +39,8 @@ describe("------------ API Routing ------------", () => {
           .request(app)
           .get("/entries")
           .end((err, res) => {
+            console.log(res.body);
+
             res.should.have.status(200);
             res.body.should.be.a("array");
             done();
@@ -51,6 +53,5 @@ describe("------------ API Routing ------------", () => {
     app.listen().close(() => {
       mongoose.connection.close();
     });
-    process.exit();
   });
 });

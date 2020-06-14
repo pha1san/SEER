@@ -34,7 +34,7 @@ describe("------------ API Routing ------------", () => {
           res.body.should.be.a("array");
           done();
         });
-    }).timeout(5000);
+    });
   });
   after(() => {
     console.log("pass this");

@@ -3,8 +3,6 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const tdd_article = require("../backend/tdd_articles.json");
 
-ATLAS_URI = "mongodb://localhost:27017/seer"; //user_1:admin@cluster0-f8yna.mongodb.net/test?retryWrites=true&w=majority
-
 let app;
 let mongoose;
 

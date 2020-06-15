@@ -87,16 +87,6 @@ export default function EnhancedTable(props) {
             console.log(error);
           });
     }
-    // axios
-    //   .post("/entries/search/" + searchField, { text: searchText })
-    //   .then((response) => {
-    //     setArticles(response.data);
-    //     setFilterArticles(response.data);
-    //     console.log(response.data.length);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }, [props.location.state, role]);
 
   useEffect(() => {

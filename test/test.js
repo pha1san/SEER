@@ -138,137 +138,137 @@ describe("API Routing and MongoDB Testing", () => {
     });
   });
 
-  describe("Moderator article list", () => {
-    let id;
-    describe("ADD an article in moderator list", () => {
-      it("Should add a new article called moderator test Article on moderator list", (done) => {
-        const article = {
-          type: "article",
-          title: "moderator test artcle",
-          author: "test me",
-          journal: "myself",
-          year: "2020",
-          month: "may",
-        };
-        chai
-          .request(app)
-          .post("/moderator/add")
-          .send(article)
-          .end((err, res) => {
-            res.should.have.status(200);
-            assert.equal(res.body, "Entry added to Moderator Queue!");
-            done();
-          });
-      }).timeout(5000);
-    });
-    describe("Get all Articles in moderator list", () => {
-      it("Should get an array of articles", (done) => {
-        chai
-          .request(app)
-          .get("/moderator")
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a("array");
-            assert.equal(res.body.length, 1);
-            id = res.body[0]._id;
-            done();
-          });
-      }).timeout(5000);
-    });
+  // describe("Moderator article list", () => {
+  //   let id;
+  //   describe("ADD an article in moderator list", () => {
+  //     it("Should add a new article called moderator test Article on moderator list", (done) => {
+  //       const article = {
+  //         type: "article",
+  //         title: "moderator test artcle",
+  //         author: "test me",
+  //         journal: "myself",
+  //         year: "2020",
+  //         month: "may",
+  //       };
+  //       chai
+  //         .request(app)
+  //         .post("/moderator/add")
+  //         .send(article)
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           assert.equal(res.body, "Entry added to Moderator Queue!");
+  //           done();
+  //         });
+  //     }).timeout(5000);
+  //   });
+  //   describe("Get all Articles in moderator list", () => {
+  //     it("Should get an array of articles", (done) => {
+  //       chai
+  //         .request(app)
+  //         .get("/moderator")
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           res.body.should.be.a("array");
+  //           assert.equal(res.body.length, 1);
+  //           id = res.body[0]._id;
+  //           done();
+  //         });
+  //     }).timeout(5000);
+  //   });
 
-    describe("Add a article and get and delete to moderator list", () => {
-      it("Should return a article called test article on moderator list", (done) => {
-        chai
-          .request(app)
-          .get("/moderator/id" + id)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a.property("_id");
-            res.body.should.be.a.property("title");
-            res.body._id.should.equal(id);
-            done();
-          });
-      }).timeout(5000);
+  //   describe("Add a article and get and delete to moderator list", () => {
+  //     it("Should return a article called test article on moderator list", (done) => {
+  //       chai
+  //         .request(app)
+  //         .get("/moderator/id" + id)
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           res.body.should.be.a.property("_id");
+  //           res.body.should.be.a.property("title");
+  //           res.body._id.should.equal(id);
+  //           done();
+  //         });
+  //     }).timeout(5000);
 
-      it("Should delete and return test article", (done) => {
-        chai
-          .request(app)
-          .delete("/moderator/delete/id" + id)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a.property("_id");
-            res.body.should.be.a.property("title");
-            res.body._id.should.equal(id);
-            done();
-          });
-      }).timeout(5000);
-    });
-  });
+  //     it("Should delete and return test article", (done) => {
+  //       chai
+  //         .request(app)
+  //         .delete("/moderator/delete/id" + id)
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           res.body.should.be.a.property("_id");
+  //           res.body.should.be.a.property("title");
+  //           res.body._id.should.equal(id);
+  //           done();
+  //         });
+  //     }).timeout(5000);
+  //   });
+  // });
 
-  describe("Analyst article list", () => {
-    let id;
-    describe("ADD an article in analyst list", () => {
-      it("Should add a new article called analyst test Article on analyst list", (done) => {
-        const article = {
-          type: "article",
-          title: "analyst test artcle",
-          author: "test me",
-          journal: "myself",
-          year: "2020",
-          month: "may",
-        };
-        chai
-          .request(app)
-          .post("/analyst/add")
-          .send(article)
-          .end((err, res) => {
-            res.should.have.status(200);
-            assert.equal(res.body, "Entry added to Analyst Queue!");
-            done();
-          });
-      }).timeout(5000);
-    });
-    describe("Get all Articles in analyst list", () => {
-      it("Should get an array of articles", (done) => {
-        chai
-          .request(app)
-          .get("/analyst")
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a("array");
-            assert.equal(res.body.length, 1);
-            id = res.body[0]._id;
-            done();
-          });
-      }).timeout(5000);
-    });
+  // describe("Analyst article list", () => {
+  //   let id;
+  //   describe("ADD an article in analyst list", () => {
+  //     it("Should add a new article called analyst test Article on analyst list", (done) => {
+  //       const article = {
+  //         type: "article",
+  //         title: "analyst test artcle",
+  //         author: "test me",
+  //         journal: "myself",
+  //         year: "2020",
+  //         month: "may",
+  //       };
+  //       chai
+  //         .request(app)
+  //         .post("/analyst/add")
+  //         .send(article)
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           assert.equal(res.body, "Entry added to Analyst Queue!");
+  //           done();
+  //         });
+  //     }).timeout(5000);
+  //   });
+  //   describe("Get all Articles in analyst list", () => {
+  //     it("Should get an array of articles", (done) => {
+  //       chai
+  //         .request(app)
+  //         .get("/analyst")
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           res.body.should.be.a("array");
+  //           assert.equal(res.body.length, 1);
+  //           id = res.body[0]._id;
+  //           done();
+  //         });
+  //     }).timeout(5000);
+  //   });
 
-    describe("Add a article and get and delete to analyst list", () => {
-      it("Should return a article called test article on analyst list", (done) => {
-        chai
-          .request(app)
-          .get("/analyst/id" + id)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a.property("_id");
-            res.body.should.be.a.property("title");
-            res.body._id.should.equal(id);
-            done();
-          });
-      }).timeout(5000);
+  //   describe("Add a article and get and delete to analyst list", () => {
+  //     it("Should return a article called test article on analyst list", (done) => {
+  //       chai
+  //         .request(app)
+  //         .get("/analyst/id" + id)
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           res.body.should.be.a.property("_id");
+  //           res.body.should.be.a.property("title");
+  //           res.body._id.should.equal(id);
+  //           done();
+  //         });
+  //     }).timeout(5000);
 
-      it("Should delete and return test article", (done) => {
-        chai
-          .request(app)
-          .delete("/analyst/delete/id" + id)
-          .end((err, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a.property("_id");
-            res.body.should.be.a.property("title");
-            res.body._id.should.equal(id);
-            done();
-          });
-      }).timeout(5000);
-    });
-  });
+  //     it("Should delete and return test article", (done) => {
+  //       chai
+  //         .request(app)
+  //         .delete("/analyst/delete/id" + id)
+  //         .end((err, res) => {
+  //           res.should.have.status(200);
+  //           res.body.should.be.a.property("_id");
+  //           res.body.should.be.a.property("title");
+  //           res.body._id.should.equal(id);
+  //           done();
+  //         });
+  //     }).timeout(5000);
+  //   });
+  // });
 });
